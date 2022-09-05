@@ -1,0 +1,20 @@
+{
+  "name": "Meeting SDK for Web ClientView",
+  "version": "1.0.0",
+  "description": "Zoom Meeting SDKs for Web ClientView",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Yosuke Sawamura",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsrsasign": "^10.5.8",
+    "path": "^0.12.7"
+  }
+}
