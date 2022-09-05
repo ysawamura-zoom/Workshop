@@ -10,9 +10,9 @@ const port = process.env.PORT || 4002;
 
 //HTTPS ON EXPRESS FRAMEWORK
 const options = {
-  key: fs.readFileSync('/etc/pki/tls/private/playground.zapto.org-key.pem'),
-  cert: fs.readFileSync('/etc/pki/tls/private/playground.zapto.org-crt.pem'),
-  ca: fs.readFileSync('/etc/pki/tls/private/playground.zapto.org-chain.pem')
+  key: fs.readFileSync('/etc/pki/tls/private/key.pem'),
+  cert: fs.readFileSync('/etc/pki/tls/private/crt.pem'),
+  ca: fs.readFileSync('/etc/pki/tls/private/chain.pem')
 };
 const server = https.createServer(options,app);
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   console.log("GET");
   res.status(200);
-  res.send(`Zoom Webhook Demo successfully running.`);
+  res.send(`Zoom API Webhook example server successfully running.`);
 })
 
 app.post('/webhook', (req, res) => {
@@ -143,7 +143,7 @@ async function SendChatMessage(hostid, play_url){
 
   let requestbody = JSON.parse('{}');
   requestbody["message"] = play_url;
-  requestbody["to_channel"] = "61ed4f102da8477fab0d8a30f0f0f574"; // CHAT CHANNEL UUID
+  requestbody["to_channel"] = "<YOUR CHAT CHANNEL UUID>"; // CHAT CHANNEL UUID
 
   return new Promise(function (resolve, reject) {
     request({
