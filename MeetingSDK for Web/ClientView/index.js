@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
 
   const iat = Math.floor(new Date().getTime() / 1000);
-  const exp = iat + 60 * 60 * 2
+  const exp = iat + 60 * 60 * 2;
 
   const oHeader = { alg: 'HS256', typ: 'JWT' }
 
@@ -35,9 +35,7 @@ app.post('/', (req, res) => {
     mn: req.body.meetingNumber,
     role: req.body.role,
     iat: iat,
-    exp: exp,
-    appKey: process.env.ZOOM_SDK_KEY,
-    tokenExp: exp
+    exp: exp
   }
 
   const sHeader = JSON.stringify(oHeader)
