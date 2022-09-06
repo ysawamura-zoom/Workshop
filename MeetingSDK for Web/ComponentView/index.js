@@ -19,7 +19,7 @@ app.use(bodyParser.json(), cors());
 
 app.post('/', (req, res) => {
 
-  const iat = Math.round(new Date().getTime() / 1000) - 30;
+  const iat = Math.floor(new Date().getTime() / 1000);
   const exp = iat + 60 * 60 * 2
 
   const oHeader = { alg: 'HS256', typ: 'JWT' }
@@ -31,7 +31,7 @@ app.post('/', (req, res) => {
     iat: iat,
     exp: exp,
     appKey: process.env.ZOOM_SDK_KEY,
-    tokenExp: iat + 60 * 60 * 2
+    tokenExp: exp
   }
 
   const sHeader = JSON.stringify(oHeader)
