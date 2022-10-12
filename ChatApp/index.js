@@ -1,4 +1,13 @@
-//require('dotenv').config()
+/////////////////////////////////////////////////////////////////
+// Oct 12, 2022
+// yosuke.sawamura@zoom.us
+// Chat app demo
+//
+// Run
+// $ npm install
+// $ node index.js
+//
+/////////////////////////////////////////////////////////////////
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
