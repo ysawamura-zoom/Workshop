@@ -1,3 +1,16 @@
+/////////////////////////////////////////////////////////////////
+// Oct 12, 2022
+// yosuke.sawamura@zoom.us
+// Webhook demo along with downloading cloud recorded files and sending chat message to chat channel.
+// *require credentioals from Server to Server OAuth 
+//
+// Run
+// $ npm install request
+// $ node webhook.js
+//
+/////////////////////////////////////////////////////////////////
+
+
 require('dotenv').config()
 const https = require('https');
 const fs = require('fs');
