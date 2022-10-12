@@ -1,0 +1,21 @@
+{
+  "name": "zoomchatbot",
+  "version": "1.0.0",
+  "description": "Zoom Chatbot sample",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Yosuke Sawamura",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "path": "^0.12.7",
+    "pg": "^8.8.0",
+    "request": "^2.88.2"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "zoom-oauth-demo",
+  "version": "1.0.0",
+  "description": "Zoom OAuth demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Yosuke Sawamurae",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.6",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "jsrsasign": "^10.5.27",
+    "jwt-decode": "^3.1.2",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7",
+    "qs": "^6.5.2",
+    "request": "^2.88.2",
+    "url": "^0.11.0"
+  }
+}
