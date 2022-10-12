@@ -12,7 +12,6 @@
   "dependencies": {
     "express": "^4.18.1",
     "fs": "^0.0.1-security",
-    "jsrsasign": "^10.5.27",
     "jwt-decode": "^3.1.2",
     "path": "^0.12.7",
     "request": "^2.88.2",
