@@ -1,7 +1,12 @@
 /////////////////////////////////////////////////////////////////
 // Sep 16, 2022
 // yosuke.sawamura@zoom.us
-// OAuth Sample using node User-Managed OAuth
+// User-Managed OAuth example
+//
+// Run
+// $ npm install
+// $ node index.js
+//
 /////////////////////////////////////////////////////////////////
 const express = require('express');
 const path = require('path');
