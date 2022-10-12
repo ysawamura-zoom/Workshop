@@ -12,7 +12,6 @@ const express = require('express');
 const path = require('path');
 const request = require('request');
 const jwt_decode = require('jwt-decode');
-const ejs = require("ejs");
 const fs = require('fs');
 const url = require('url');
 
