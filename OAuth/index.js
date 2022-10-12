@@ -57,7 +57,7 @@ app.get('/', async (req, res) => {
     }else{
       console.log("no code");
       htmlbody = '<html><body>' +
-                    '<h1>Error - node code</h1>' +
+                    '<h1>Error - no code</h1>' +
                 '</body></html>';
     }
     res.status(200);
