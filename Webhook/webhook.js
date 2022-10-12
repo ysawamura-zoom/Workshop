@@ -5,7 +5,7 @@
 // *require credentioals from Server to Server OAuth 
 //
 // Run
-// $ npm install request
+// $ npm install
 // $ node webhook.js
 //
 /////////////////////////////////////////////////////////////////
