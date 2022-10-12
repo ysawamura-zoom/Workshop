@@ -10,6 +10,7 @@
   "author": "Yosuke Sawamurae",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "fs": "^0.0.1-security",
     "jwt-decode": "^3.1.2",
