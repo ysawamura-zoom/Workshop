@@ -6,10 +6,10 @@
 const request = require('request')
 
 //VARIABLES
-const ZOOM_API_ACCOUNTID = "GnEBo30iQZaO3QPlNeHadA"
-const ZOOM_API_CLIENTID = "IgiOV9D6R6W6Wxs33Et9lQ"
-const ZOOM_API_CLIENTSECRET = "wGK46B3ktgTtysPrcL7WRdwUlgHwK3I4"
-const basenc = Buffer.from(ZOOM_API_CLIENTID + ":" + ZOOM_API_CLIENTSECRET).toString('base64');
+const ZOOM_API_ACCOUNTID = "<YOUR ACCOIUNT ID>"   // Create Server to Server OAuth on Zoom Marketplace
+const ZOOM_API_CLIENTID = "<YOUR CLIENT ID>"      // Create Server to Server OAuth on Zoom Marketplace
+const ZOOM_API_CLIENTSECRET = "<YOUR CLIENT SECRERT>" // Create Server to Server OAuth on Zoom Marketplace
+const basenc = Buffer.from(ZOOM_API_CLIENTID + ":" + ZOOM_API_CLIENTSECRET).toString('base64')
 
 //GET API TOKEN (Server to Server OAUTH)
 async function getToken(accountid,basenc){
