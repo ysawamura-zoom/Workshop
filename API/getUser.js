@@ -1,6 +1,13 @@
+/////////////////////////////////////////////////////////////////
+// Oct 12, 2022
+// yosuke.sawamura@zoom.us
+// API demo using Server to Server OAuth access_token
+//
 // Run
 // $ npm install request
 // $ node getUser.js
+//
+/////////////////////////////////////////////////////////////////
 
 //NODE MODULES
 const request = require('request')
