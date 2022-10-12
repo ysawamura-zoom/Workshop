@@ -9,18 +9,18 @@
 //
 /////////////////////////////////////////////////////////////////
 const express = require('express');
-const path = require('path');
 const request = require('request');
 const jwt_decode = require('jwt-decode');
 const fs = require('fs');
 const url = require('url');
-
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const app = express();
 const port = 4501;
 
 const redirect_uri = "https://<YOUR SERVER>";       // URL of your server
-const clientID = "<YOUR OAUTH CLIENT ID";           // Copy Clent ID from Markteplace Oauth app
-const clientSecret = "<YOUR OAUTH CLIENT SECRET>";  // Copy Client Secret from Markteplace Oauth app
+const clientID = process.env.ZOOM_OAUTH_CLIENT_ID;          // Copy Clent ID from Markteplace Oauth app
+const clientSecret = process.env.ZOOM_OAUTH_CLIENT_SECRET;  // Copy Client Secret from Markteplace Oauth app
 let data = clientID + ":" + clientSecret;
 let buff = Buffer.from(data);
 const authorization = buff.toString('base64');            // Generate Base64-encoded token from clientID and clientSecret
