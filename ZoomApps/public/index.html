@@ -1,0 +1,420 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <style>
+  canvas#myCanvas{
+    /*visibility: hidden;*/
+    display: none;
+  }
+  </style>
+  <script src="https://appssdk.zoom.us/sdk.min.js"></script>
+  <!--  <script src="./js/sdk.js"></script> -->
+<script>
+const start = async function(a, b) {
+  const result = await zoomSdk.config({
+    //size: { width: 480, height: 360 },
+    capabilities: [
+      //APIs
+      "startOrJoinMeeting",
+      "shareApp",
+      "listCameras",
+      "setCamera",
+      "setVideoMirrorEffect",
+      "getMeetingParticipants",
+      "cloudRecording",
+      "allowParticipantToRecord",
+      "getMeetingContext",
+      "getSupportedJsApis",
+      "showNotification",
+      "openUrl",
+      "setVirtualBackground",
+      "canSupportVirtualBackground",
+      "listCameras",
+      "setCamera",
+      "sendAppInvitation",
+      "sendAppInvitationToAllParticipants",
+      "getUserContext",
+      "getRecordingContext",
+      "getMeetingContext",
+      "getMeetingJoinUrl",
+      "getMeetingUUID",
+      "expandApp",
+      "connect",
+      "postMessage",
+      "startCollaborate",
+      //Events
+      "onShareApp",
+      "onSendAppInvitation",
+      "onCloudRecording",
+      "onActiveSpeakerChange",
+      "onAppPopout",
+      "onCohostChange",
+      "onParticipantChange",
+      "onReaction",
+      "onConnect",
+      "onExpandApp",
+      "onMessage",
+      "onMeeting",
+      // The following are needed for Layers API.
+      // Include any other capabilities your app needs here, too.
+      "getRunningContext",
+      "runRenderingContext",
+      "closeRenderingContext",
+      "drawParticipant",
+      "clearParticipant",
+      "drawImage",
+      "clearImage",
+      "onMyMediaChange"
+    ],
+  });
+  printConsole(result);
+}
+start();
+
+async function getUser() {
+  var userDetail;
+    await zoomSdk.callZoomApi("getUserContext")
+    .then(function(r){
+      userDetail = r;
+      printConsole(r);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+    return userDetail;
+}
+
+async function getMeetingUUID() {
+  var meetingUUID;
+    await zoomSdk.callZoomApi("getMeetingUUID")
+    .then(function(r){
+      //printConsole(r);
+      meetingUUID = r.meetingUUID;
+      //console.log("getMeetingUUID++: " + meetingUUID);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+  return meetingUUID;
+}
+
+async function getMeeting() {
+    await zoomSdk.callZoomApi("getMeetingContext")
+    .then(function(r){
+      printConsole(r);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+}
+
+async function getMtgParticipants() {
+    await zoomSdk.callZoomApi("getMeetingParticipants")
+    .then(function(r){
+      printConsole(r);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+}
+
+async function connect() {
+    await zoomSdk.callZoomApi("connect")
+    .then(function(r){
+      printConsole(r);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+}
+
+async function postMessage() {
+    var obj = JSON.parse('{"message":"test text"}');
+    await zoomSdk.callZoomApi("postMessage", obj)
+    .then(function(r){
+      printConsole(r);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+}
+
+async function openUrl(urlstring) {
+    //await zoomSdk.openUrl({ url: "https://playground.zapto.org:8443" })
+    await zoomSdk.openUrl({ url: urlstring })
+    .then(function(r){
+      printConsole(r);
+    })
+    .catch(function(e){
+      printConsole(e);
+    })
+}
+
+function printConsole(obj){
+  console.log(obj);
+  var node = document.createElement("pre");
+  var textnode = document.createTextNode(JSON.stringify(obj, null, 2));
+  node.appendChild(textnode);
+  document.getElementById("console").appendChild(node);
+}
+
+zoomSdk.addEventListener("onCloudRecording", (eventInfo) => {
+  printConsole(eventInfo);
+});
+
+zoomSdk.addEventListener("onParticipantChange", (eventInfo) => {
+  printConsole(eventInfo);
+});
+
+zoomSdk.addEventListener("onReaction", (eventInfo) => {
+  printConsole(eventInfo);
+});
+
+zoomSdk.addEventListener("onMeeting", (eventInfo) => {
+  console.log(eventInfo);
+  console.log(eventInfo.action);
+});
+
+zoomSdk.addEventListener("onConnect", (eventInfo) => {
+  console.log(eventInfo);
+  console.log(eventInfo.action);
+});
+
+zoomSdk.addEventListener("onMessage", (eventInfo) => {
+   console.log(eventInfo);
+   console.log(eventInfo.payload);
+   printConsole(eventInfo);
+});
+
+zoomSdk.addEventListener("onMyMediaChange", (eventInfo) => {
+   console.log(eventInfo);
+   console.log(eventInfo.payload);
+   printConsole(eventInfo);
+});
+
+</script>
+
+</head>
+<body>
+<table><tr><th>
+<h3>ZoomApps Sample</h3>
+<hr />
+<p>
+ <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;"></canvas>
+</p>
+<p>
+Preview:<br>
+ <img id='image' style="border:1px solid #d3d3d3;">
+</p>
+<p>
+ <input type="text" id="text" name="text">
+</p>
+<p>
+ <button type="button" onclick="setVirtualForeground()">setVirtualForeground()</button>
+ <br>
+ <button type="button" onclick="removeVirtualForeground()">removeVirtualForeground()</button>
+ <br>
+ <button type="button" onclick="setVirtualBackground()">setVirtualBackground()</button>
+ <br>
+ <button type="button" onclick="removeVirtualBackground()">removeVirtualBackground()</button>
+ <br>
+ <button type="button" onclick="setLayerOnTop()">setLayerOnTop()</button>
+ <br>
+ <button type="button" onclick="removeLayerOnTop()">removeLayerOnTop()</button>
+</p>
+<hr />
+<p>
+<button type="button" onclick="getUser()">getUserContext()</button>
+<br>
+<button type="button" onclick="getMeetingUUID()">getMeetingUUID()</button>
+<br>
+<button type="button" onclick="getMeeting()">getMeetingContext()</button>
+<br>
+<button type="button" onclick="getMtgParticipants()">getMeetingParticipants()</button>
+<br>
+<button type="button" onclick="connect()">connect()</button>
+<br>
+<button type="button" onclick="postMessage()">postMessage()</button>
+</p>
+<hr />
+</th></tr></table>
+<b>Console Log:</b><br>
+<p id="console"></p>
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var image = document.getElementById('image'); //Image element
+
+//Red Box
+var imgData = ctx.createImageData(300, 150);
+var i;
+for (i = 0; i < imgData.data.length; i += 4) {
+  //from 0-255; 0 is transparent and 255 is fully visible
+  imgData.data[i+0] = 40; //red
+  imgData.data[i+1] = 40; // green
+  imgData.data[i+2] = 40; // blue
+  imgData.data[i+3] = 40; // alpha channel
+}
+
+drawing = new Image();
+drawing.src = "images/logo.png"; // can also be a remote URL e.g. http://
+/*
+drawing.onload = function() {
+   //ctx.drawImage(drawing,0,0,drawing.width*scaleFactor,drawing.height*scaleFactor);
+   ctx.drawImage(drawing,0,0,300,68);           // first goes the back
+   ctx.putImageData(imgData, 10, 50);           // red box
+   ctx.fillRect(20, 80, 40, 40);                // black square
+   ctx.font = "bold 28px verdana, sans-serif";  // text font
+   //ctx.fillStyle = 'blue';                    // style color
+   ctx.fillText("text1", 20, 70);               // first font
+   ctx.fillText("text2", 120, 70);              // second font
+   //image.src = ctx.canvas.toDataURL();
+   //console.log("console: " + image.src);
+};
+*/
+drawing.onload = function() {
+  ctx.clearRect(0, 0, c.width, c.height);      // clear canvas
+  ctx.putImageData(imgData, 0, 0);             // red box
+  ctx.drawImage(drawing,0,82);                 // image size 300x68 cavus size 300x150 | 82 = 150-68
+  image.src = ctx.canvas.toDataURL();          // add image on to img tag
+  ctx.drawImage(image, 0, 0 );                 // draw inside img tag
+  //console.log(image.src);
+}
+
+document.getElementById('text').addEventListener('keyup', function (){
+    ctx.clearRect(0, 0, c.width, c.height); // clear canvas
+    ctx.putImageData(imgData, 0, 0);
+    ctx.drawImage(drawing,0,82);
+    //ctx.fillStyle = 'white';
+    ctx.font = "bold 60px verdana, sans-serif";
+    ctx.fillText(this.value, 0, 60);
+    image.src = ctx.canvas.toDataURL();
+    //console.log(image.src);
+    console.log("keyup:" + this.value);
+}, false);
+
+// create ImageData from img tag
+/*
+function getImageData(){
+  c.width = image.width;
+  c.height = image.height;
+  ctx.drawImage(image, 0, 0 );
+  var myImageData = ctx.getImageData(0, 0, image.width, image.height);
+  console.log("getImageData: " + myImageData);
+  return myImageData;
+}
+*/
+
+const FIXED_WIDTH = 1280;
+
+async function getImageData(fileUrl) {
+  return new Promise((resolve) => {
+    const canvas = document.createElement('canvas')
+    const img = new Image()
+    img.crossOrigin = 'Anonymous'
+
+    img.onload = function () {
+      const height = (FIXED_WIDTH * img.height) / img.width
+
+      canvas.width = FIXED_WIDTH
+      canvas.height = height
+
+      const ctx = canvas.getContext('2d')
+
+      ctx.drawImage(img, 0, 0, FIXED_WIDTH, height)
+      const imageData = ctx.getImageData(0, 0, FIXED_WIDTH, height)
+
+      resolve(imageData)
+    }
+
+    img.src = fileUrl
+  })
+}
+
+var imageid;
+
+async function setVirtualForeground(){
+   var imgdata = await getImageData(image.src);
+
+   var myOptions = {
+     imageData: imgdata
+   };
+
+   console.log("setVirtualForeground");
+   imageid = await zoomSdk.setVirtualForeground(myOptions)
+   .then((r) => {
+       console.log("setVirtualForeground", r);
+   })
+   .catch((e) => {
+       console.log("setVirtualForeground", e);
+   });
+}
+
+async function removeVirtualForeground() {
+    await zoomSdk.callZoomApi("removeVirtualForeground")
+    .then(function(r){
+      console.log("removeVirtualForeground", r);
+    })
+    .catch(function(e){
+      console.log("removeVirtualForeground",e);
+    })
+}
+
+async function setVirtualBackground(){
+  console.log("setVirtualBackground");
+  var myOptions = {
+    fileUrl: image.src
+  };
+  await zoomSdk.setVirtualBackground(myOptions);
+}
+
+async function removeVirtualBackground() {
+    await zoomSdk.callZoomApi("removeVirtualBackground")
+    .then(function(r){
+      console.log("removeVirtualBackground", r);
+    })
+    .catch(function(e){
+      console.log("removeVirtualBackground",e);
+    })
+}
+
+async function setLayerOnTop(){
+  //set runRenderingContext
+  var ctxOptions = {
+    view: "myVideo"
+  };
+  await zoomSdk.runRenderingContext(ctxOptions)
+  .then(function(r){
+    console.log("runRenderingContext",r);
+  })
+  .catch(function(e){
+    console.log("runRenderingContext",e);
+  });
+
+  //get imgaeData and set
+  ctx.drawImage(image, 0, 0 );
+  //var myImageData = ctx.getImageData(0, 0, image.width, image.height);
+  var myImageData = await getImageData(image.src);
+  var myOptions = {
+    imageData: myImageData,
+    x: '10px',
+    y: '10px',
+    zIndex:'1'
+  };
+  await zoomSdk.drawImage(myOptions)
+  .then(function(r){
+    console.log("drawImage",r);
+  })
+  .catch(function(e){
+    console.log("drawImage",e);
+  });
+}
+
+async function removeLayerOnTop(){
+  console.log("removeLayerOnTop");
+}
+
+</script>
+</body>
+</html>
