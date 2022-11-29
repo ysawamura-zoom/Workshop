@@ -67,7 +67,7 @@ app.get('/oauth', (req, res) => {
   res.end()
 })
 
-app.listen(port, () => console.log(`Zoom Meeting SDK for Web Sample. port: ${port}!`))
+app.listen(port, () => console.log(`ZoomApps Sample. port: ${port}!`))
 
 // X-Zoom-App-Context context Decryption
 function unpack(context) {
