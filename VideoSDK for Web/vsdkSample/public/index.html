@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>VideoSDK Sample CDN</title>
+    <style>
+    .video-canvas {
+      background: rgba(0, 0, 0, 1);
+      margin: 1px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 1);
+    }
+    </style>
+  </head>
+  <body>
+<p>
+  Display Name: <input type="text" id="user_name" maxLength="20" placeholder="Name" value="User01" required>
+  Session Name: <input type="text" id="session_topic" maxLength="200" style="width:150px" placeholder="Session Topic" value="vsdkmeeting" required>
+  Session Password: <input type="text" id="session_pwd" style="width:150px" maxLength="32" placeholder="Session Password" value="123456">
+  <form id="join-role">
+    <input type="radio" name="joinRole" value="0" checked> Participant
+    <input type="radio" name="joinRole" value="1"> Host
+  </form>
+</p>
+<p>
+  Session:
+  <button id="join-button">Join/Start</button>
+</p>
+
+<hr/>
+
+<p>
+  Leave/End:
+  <button id="leave-button">Leave/End</button>
+</p>
+<p>
+  Audio:
+  <button id="audio-start-button">Audio Start</button>
+
+  <button id="audio-stop-button">Audio Stop</button>
+
+  Microphone:
+  <button id="mic-button">Mute/UnMute</button>
+</p>
+<p>
+  Camera:
+  <button id="camera-button">Start/Stop</button>
+
+  Switch Camera:
+  <button id="camera-switch-button">Switch</button>
+</p>
+<p>
+  ScreenShare:
+  <button id="screenshare-button">Start/Stop</button>
+</p>
+<p>
+  EnableQOS:
+  <button id="qos-button">Enable/Disable QOS</button>
+</p>
+
+<hr/>
+
+  <p>Video:</p>
+  <canvas id="far-video-canvas" class="video-canvas" width="640" height="360" style="background-color:black; height:360px; width:640px;"></canvas>
+  <canvas id="self-video-canvas" class="video-canvas" width="160" height="90" style="background-color:black; height:90px; width:160px;"></canvas>
+
+  <p>ScreenShare:</p>
+  <canvas id="far-screenshare-canvas" class="video-canvas" width="640" height="360" style="background-color:black; height:360px; width:640px;"></canvas>
+  <video id="self-ScreenShare-video" class="video-canvas" width="160" height="90" style="background-color:black; height:90px; width:160px;"></video>
+
+  <script src="https://source.zoom.us/videosdk/zoom-video-1.5.5.min.js"></script>
+  <script src="./js/index.js"></script>
+
+</body>
+</html>
