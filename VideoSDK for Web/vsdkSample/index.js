@@ -1,3 +1,9 @@
+/*
+Zoom Video SDK Sample
+yosuke.sawamura@zoom.us
+12/29/2022
+*/
+
 
 const express = require('express')
 const bodyParser = require('body-parser')
