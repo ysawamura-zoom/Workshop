@@ -14,15 +14,15 @@ const KJUR = require('jsrsasign')
 const app = express()
 const port = 3001
 const path = require('path')
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 app.use(function(req, res, next) {
   res.header("Cross-Origin-Embedder-Policy", "require-corp")
   res.header("Cross-Origin-Opener-Policy", "same-origin")
-  next();
-});
+  next()
+})
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(bodyParser.json(), cors());
+app.use(bodyParser.json(), cors())
 
 app.post('/', (req, res) => {
 
