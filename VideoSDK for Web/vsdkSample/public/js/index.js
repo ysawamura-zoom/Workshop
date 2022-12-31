@@ -116,11 +116,11 @@ async function joinSession() {
           waitForShareDecoder(500, payload.userId)
         }
       }else if (payload.state == "Inactive"){
-        stream.stopShareView();
+        stream.stopShareView()
         let shareCanvas = document.getElementById('far-screenshare-canvas')
         stream.clearVideoCanvas(shareCanvas)
       }
-  });
+  })
 
   //STRIGGER WHEN EVER QOS STATISTIC GETS ENABLED(SUBSCRIBED)
   client.on('audio-statistic-data-change', (payload) => {
@@ -233,7 +233,7 @@ async function cameraSwitch() {
     }
     await stream.switchCamera(cameras[currentCamera].deviceId)
   } catch (e){
-    console.log(e);
+    console.log(e)
   }
 
 }
@@ -246,11 +246,11 @@ async function screenShare() {
   try {
     console.log("isSharing: " + isSharing)
     if(!isSharing){
-      isSharing = true;
+      isSharing = true
       stream.startShareScreen(shareVideo)
     }else{
       stream.stopShareScreen()
-      isSharing = false;
+      isSharing = false
     }
   } catch (e) {
       console.error('Error cannot start/stop screensharing', e)
@@ -278,7 +278,7 @@ async function enableQOS() {
     }
   }
   console.log("isenableQOS",isEnableQOS)
-};
+}
 
 
 //TOGGLE NEAR END VIDEO ON CANVAS
@@ -295,7 +295,7 @@ const toggleSelfVideo = async (mediaStream, userId, isVideoOn) => {
             0,     // Starting point x
             0,     // Starting point y
             0      // Video Quality 0:90p, 1:180p, 2:360p, 3:720p
-        );
+        )
     } else {
         console.log("toggleSelfVideo stop")
         await mediaStream.stopVideo()
@@ -411,32 +411,32 @@ function sleep(ms) {
 //　GET SIGNATURE FOR VSDK FOR WEB
 function getSignature(topic, role, password) {
     return new Promise(function (resolve, reject) {
-        let xhr = new XMLHttpRequest();
-        //console.log("location.hostname: " + location.hostname);
-        xhr.open('POST', './', true);
-        xhr.setRequestHeader('content-type', 'application/json');
+        let xhr = new XMLHttpRequest()
+        //console.log("location.hostname: " + location.hostname)
+        xhr.open('POST', './', true)
+        xhr.setRequestHeader('content-type', 'application/json')
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                const obj = JSON.parse(xhr.response);
-                //console.log("getSignature: " + xhr.response);
-                resolve(obj.signature);
+                const obj = JSON.parse(xhr.response)
+                //console.log("getSignature: " + xhr.response)
+                resolve(obj.signature)
             } else {
                 reject({
                     status: this.status,
                     statusText: xhr.statusText
-                });
+                })
             }
-        };
+        }
         xhr.onerror = function () {
             reject({
                 status: this.status,
                 statusText: xhr.statusText
-            });
-        };
-        const body = JSON.parse('{}');
-        body["topic"] = topic;
-        body["role"] = parseInt(role);
-        body["password"] = password;
-        xhr.send(JSON.stringify(body));
-    });
-};
+            })
+        }
+        const body = JSON.parse('{}')
+        body["topic"] = topic
+        body["role"] = parseInt(role)
+        body["password"] = password
+        xhr.send(JSON.stringify(body))
+    })
+}
