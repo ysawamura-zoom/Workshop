@@ -3,8 +3,8 @@ Zoom Video SDK Sample
 yosuke.sawamura@zoom.us
 12/29/2022
 */
-let ZoomVideo;
-let client;
+let ZoomVideo
+let client
 let stream
 let videoDecode
 let videoEncode
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('screenshare-button').addEventListener('click', screenShare)
   document.getElementById('qos-button').addEventListener('click', enableQOS)
   console.log('DOMContentLoaded')
-});
+})
 
 ////////////////////////////////////////////////////////////////////////
 // TO BEGIN
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function() {
 async function joinSession() {
 
   //CREATE VIDEO SDK CLIENT
-  ZoomVideo = window.WebVideoSDK.default;
-  client = ZoomVideo.createClient();
+  ZoomVideo = window.WebVideoSDK.default
+  client = ZoomVideo.createClient()
 
   //INIT VSDK CLIENT
   client.init('en-US', 'CDN')
