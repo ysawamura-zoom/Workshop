@@ -55,7 +55,7 @@ app.get('/oauth', (req, res) => {
   if(req.query.code){
     console.log("code: " + req.query.code);
     // DO YOUR OAUTH LOGIC HERE
-    // "uid" USED INSIDE ZOOM APPS IS THE SAME "id" RETRIVED BY USER INDRO OVER API
+    // "uid" USED INSIDE ZOOM APPS IS THE SAME "id" RETRIVED BY USER INFO OVER API
     // https://marketplace.zoom.us/docs/api-reference/zoom-api/methods/#operation/user
   }
   var htmlbody = '<html><body>' +
