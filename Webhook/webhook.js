@@ -54,7 +54,7 @@ app.post('/webhook', (req, res) => {
     WriteToLog("SecretTokenVerification : true");
     if(req.body.event === 'endpoint.url_validation') {
       WriteToLog('endpoint.url_validation');
-      /*const hashForValidate = crypto.createHmac('sha256', process.env.ZOOM_WEBHOOK_SECRET_TOKEN).update(req.body.payload.plainToken).digest('hex');
+      const hashForValidate = crypto.createHmac('sha256', process.env.ZOOM_WEBHOOK_SECRET_TOKEN).update(req.body.payload.plainToken).digest('hex');
       response = {
         message: {
           plainToken: req.body.payload.plainToken,
@@ -65,18 +65,27 @@ app.post('/webhook', (req, res) => {
       console.log(response.message);
       res.status(response.status);
       res.json(response.message);
-      */
     }else{
       switch (req.body.event){
         case 'recording.completed':
           WriteToLog('recording.completed');
+          
+          let topic = req.body.payload.object.topic;
+          let filename = topic.replace(/ /g, '_');
           let hostid = req.body.payload.object.host_id;
-          let play_url = req.body.payload.object.recording_files[0].play_url;
-          let download_url = req.body.payload.object.recording_files[0].download_url;
-          let token = req.body.download_token;
-          let url = download_url + "?access_token="+token;
-          let filename = req.body.payload.object.recording_files[0].recording_start;
-          let path = "./download/" + filename + ".mp4";
+
+          for (let i = 0; i < req.body.payload.object.recording_files.length; i++) {
+            let file_extension = req.body.payload.object.recording_files[i].file_extension;
+            let recording_type = req.body.payload.object.recording_files[i].recording_type;
+            let download_url = req.body.payload.object.recording_files[i].download_url;
+            let download_token = req.body.download_token;
+            let download_dir = path.join(__dirname, './download/') + filename + "+" + recording_type + "." + file_extension;
+            Download(download_url, download_token, download_dir);
+            
+            let play_url = req.body.payload.object.recording_files[i].play_url;
+            SendChatMessage(hostid, play_url);
+          }
+          
           /*
           console.log(download_url);
           console.log(token);
@@ -84,8 +93,7 @@ app.post('/webhook', (req, res) => {
           console.log(filename);
           console.log(path);
           */
-          SendChatMessage(hostid, play_url);
-          Download(url, path);
+          
           break;
         default:
           WriteToLog("Webhook notification received but no match");
@@ -131,17 +139,23 @@ function DateTime(){
 };
 
 //DOWNLOAD CLOUD RECORDED FILE
-function Download(url, path){
-  console.log("Download started");
-  const download = (url, path, callback) => {
-    request.head(url, (err, res, body) => {
-      request(url)
-        .pipe(fs.createWriteStream(path))
+function Download(url, t, d){
+  WriteToLog("Download started");
+  const download = (url, t, d, callback) => {
+    request.head(url, t, (err, res, body) => {
+      request({
+        url: url,
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + t
+        }
+      })
+        .pipe(fs.createWriteStream(d))
         .on('close', callback)
     })
   }
-  download(url, path, () => {
-    WriteToLog("Download completed: " + path);
+  download(url, t, d, () => {
+    WriteToLog("Download completed: " + d);
   })
 };
 
